@@ -1,4 +1,4 @@
-from app.config import settings
+from enerlytics_ai.app.config import settings
 
 
 def estimate_lcoe_usd_per_kwh(annual_energy_kwh: float) -> float:

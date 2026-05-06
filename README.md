@@ -51,7 +51,7 @@ cp .env.example .env
 4) Start the API:
 
 ```bash
-uvicorn app.main:app --reload
+uvicorn enerlytics_ai.app.main:app --app-dir src --reload
 ```
 
 The API will be available at:
@@ -71,19 +71,49 @@ curl http://127.0.0.1:8000/health
 Analyze endpoint example:
 
 ```bash
-curl -X POST "http://127.0.0.1:8000/analyze" \
+curl -X POST "http://127.0.0.1:8000/api/v1/analyze-site" \
   -H "Content-Type: application/json" \
   -d '{"latitude":41.0082,"longitude":28.9784}'
 ```
+
+Historical endpoint example (Turkey, monthly series by year range):
+
+```bash
+curl -X POST "http://127.0.0.1:8000/api/v1/historical-solar" \
+  -H "Content-Type: application/json" \
+  -d '{"latitude":41.0082,"longitude":28.9784,"start_year":2015,"end_year":2024}'
+```
+
+Historical response includes:
+
+- `monthly_series`: month-by-month GHI values
+- `annual_summary`: year-by-year total and average GHI
 
 Expected response shape:
 
 ```json
 {
+  "data_source": "NASA POWER",
   "annual_energy_kwh": 0.0,
   "estimated_lcoe": 0.0,
   "summary": "Estimated annual production is ... kWh with an LCOE of ... USD/kWh."
 }
+```
+
+Project Structure
+-----------------
+
+```text
+enerlytics.ai/
+  src/enerlytics_ai/    # application source code
+  configs/              # environment and deployment configs
+  pipelines/            # data/ML pipeline definitions
+  analysis/             # notebooks, figures, reports
+  tests/unit/           # fast isolated tests
+  tests/integration/    # service-level tests
+  docs/                 # project documentation
+  scripts/              # automation and utility scripts
+  data/                 # raw and processed datasets
 ```
 
 License

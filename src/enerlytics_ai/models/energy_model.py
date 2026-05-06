@@ -1,4 +1,4 @@
-from app.config import settings
+from enerlytics_ai.app.config import settings
 
 
 def estimate_annual_energy_kwh(annual_irradiance_kwh_m2: float) -> float:

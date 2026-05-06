@@ -1,6 +1,6 @@
 from typing import Dict
 
-from utils.constants import DAYS_IN_YEAR, MONTHS_IN_YEAR, NASA_MONTH_KEYS
+from enerlytics_ai.utils.constants import DAYS_IN_YEAR, MONTHS_IN_YEAR, NASA_MONTH_KEYS
 
 
 def monthly_to_annual_irradiance(monthly_daily_ghi: Dict[str, float]) -> float:
