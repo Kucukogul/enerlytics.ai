@@ -126,7 +126,5 @@ MIT License allows reuse, modification and distribution with proper attribution.
 Author
 ------
 
+Data Scientist
 Hüseyin Küçükoğul
-
-Data Scientist  
-Co-Founder & CEO — RemmeyAI
