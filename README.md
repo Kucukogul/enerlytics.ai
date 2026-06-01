@@ -1,130 +1,89 @@
-Enerlytics.ai — Global Renewable Investment Intelligence Platform
-==================================================================
+# Enerlytics.ai
 
-Enerlytics.ai is an AI-driven renewable energy intelligence platform designed to evaluate and discover high-potential locations for utility-scale renewable energy investments worldwide.
+AI platform for predicting renewable energy investment opportunities in Turkiye.
 
-The platform combines global meteorological datasets, machine learning models and financial investment analytics to estimate renewable energy production and evaluate the financial feasibility of large-scale solar, wind and battery storage projects.
+Combines meteorological data, machine learning and financial analytics to estimate solar energy potential and evaluate project feasibility at any location in Turkiye.
 
-Enerlytics.ai enables developers, investors and energy analysts to analyze renewable potential at any geographic coordinate and identify optimal locations for future energy infrastructure.
+---
 
-Project Objectives
-------------------
-
-The primary objective of Enerlytics.ai is to build a scalable AI platform capable of evaluating renewable energy investment opportunities across the globe.
-
-The project focuses on the following goals:
-
-- Build a global geographic grid for renewable resource scanning
-- Collect and process global weather datasets relevant to renewable energy production
-- Train machine learning models to estimate solar and wind energy generation potential
-- Calculate financial investment metrics such as ROI and Levelized Cost of Energy (LCOE)
-- Rank potential renewable investment locations using AI-based scoring models
-- Provide an interactive dashboard to analyze renewable investment opportunities
-
-Run Locally
------------
-
-Prerequisites:
-
-- Python 3.11+
-- pip
-
-1) Create and activate a virtual environment:
+## Setup
 
 ```bash
-python -m venv .venv
-source .venv/bin/activate
-```
-
-2) Install dependencies:
-
-```bash
+python -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
-```
-
-3) Create environment file:
-
-```bash
 cp .env.example .env
-```
-
-4) Start the API:
-
-```bash
 uvicorn enerlytics_ai.app.main:app --app-dir src --reload
 ```
 
-The API will be available at:
+API → `http://127.0.0.1:8000` · Docs → `http://127.0.0.1:8000/docs`
 
-- `http://127.0.0.1:8000`
-- Swagger UI: `http://127.0.0.1:8000/docs`
+---
 
-API Quick Check
----------------
-
-Health check:
+## Quick Start
 
 ```bash
-curl http://127.0.0.1:8000/health
-```
-
-Analyze endpoint example:
-
-```bash
+# Site analysis
 curl -X POST "http://127.0.0.1:8000/api/v1/analyze-site" \
   -H "Content-Type: application/json" \
-  -d '{"latitude":41.0082,"longitude":28.9784}'
-```
+  -d '{"latitude": 39.9208, "longitude": 32.8541}'
 
-Historical endpoint example (Turkey, monthly series by year range):
-
-```bash
+# Historical solar data
 curl -X POST "http://127.0.0.1:8000/api/v1/historical-solar" \
   -H "Content-Type: application/json" \
-  -d '{"latitude":41.0082,"longitude":28.9784,"start_year":2015,"end_year":2024}'
+  -d '{"latitude": 39.9208, "longitude": 32.8541, "start_year": 2015, "end_year": 2024}'
 ```
 
-Historical response includes:
+---
 
-- `monthly_series`: month-by-month GHI values
-- `annual_summary`: year-by-year total and average GHI
+## Structure
 
-Expected response shape:
-
-```json
-{
-  "data_source": "NASA POWER",
-  "annual_energy_kwh": 0.0,
-  "estimated_lcoe": 0.0,
-  "summary": "Estimated annual production is ... kWh with an LCOE of ... USD/kWh."
-}
 ```
-
-Project Structure
------------------
-
-```text
 enerlytics.ai/
-  src/enerlytics_ai/    # application source code
-  configs/              # environment and deployment configs
-  pipelines/            # data/ML pipeline definitions
-  analysis/             # notebooks, figures, reports
-  tests/unit/           # fast isolated tests
-  tests/integration/    # service-level tests
-  docs/                 # project documentation
-  scripts/              # automation and utility scripts
-  data/                 # raw and processed datasets
+│
+├── src/enerlytics_ai/
+│   ├── api/
+│   │   └── routes.py                        # API route definitions
+│   ├── app/
+│   │   ├── main.py                          # FastAPI app entry point
+│   │   └── config.py                        # app configuration
+│   ├── models/
+│   │   ├── energy_model.py                  # solar energy estimation model
+│   │   └── lcoe_model.py                    # LCOE financial model
+│   ├── services/
+│   │   ├── pvgis_data_service.py            # PVGIS API integration
+│   │   ├── solar_data_service.py            # solar data fetching & caching
+│   │   └── solar_model_service.py           # model inference service
+│   └── utils/
+│       ├── constants.py                     # shared constants
+│       └── helpers.py                       # utility functions
+│
+├── pipelines/
+│   ├── province_scan.py                     # scans all 81 TR provinces
+│   └── scoring.py                           # investment scoring logic
+│
+├── analysis/
+│   ├── notebooks/
+│   │   ├── 01_eda.ipynb                     # exploratory data analysis
+│   │   └── 02_turkiye_geneli_eda.ipynb      # Turkiye-wide solar EDA
+│   └── outputs/
+│       ├── monthly_stats.csv
+│       ├── tr81_monthly_risk_band.csv
+│       └── tr81_province_ranking.csv        # province investment ranking
+│
+├── data/
+│   ├── raw/pvgis/                           # raw PVGIS API responses
+│   └── processed/                           # cleaned province datasets
+│
+├── scripts/
+│   └── fetch_pvgis_81_seriescalc.py         # data collection script
+│
+└── tests/
+    ├── unit/
+    │   └── test_scoring.py
+    └── integration/
+        └── test_province_pipeline.py
 ```
 
-License
--------
+---
 
-This project is licensed under the MIT License.
-
-MIT License allows reuse, modification and distribution with proper attribution.
-
-Author
-------
-
-Data Scientist
-Hüseyin Küçükoğul
+**Author:** Huseyin Kucukogul · MIT License
