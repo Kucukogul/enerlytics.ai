@@ -13,3 +13,12 @@ venv/
 # Data artifacts (local only)
 data/**
 !data/README.md
+
+# Claude Code config (local only)
+.claude/
+CLAUDE.md
+
+# Build artifacts
+dist/
+build/
+*.egg-info/

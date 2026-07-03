@@ -1,0 +1,42 @@
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "enerlytics.ai"
+version = "0.1.0"
+description = "AI platform for predicting renewable energy investment opportunities using meteorological data, machine learning and financial analytics."
+readme = "README.md"
+license = { file = "LICENSE" }
+authors = [{ name = "Huseyin Kucukogul", email = "huseyinkucukogulcontact@gmail.com" }]
+requires-python = ">=3.10"
+keywords = ["energy", "AI", "machine learning", "renewable energy", "solar", "analytics"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+dependencies = [
+    "fastapi>=0.110.0",
+    "uvicorn>=0.27.0",
+    "pandas>=2.1.0",
+    "numpy>=1.26.0",
+    "requests>=2.31.0",
+    "python-dotenv>=1.0.0",
+    "pyyaml>=6.0.0",
+    "pyarrow>=14.0.0",
+    "shapely>=2.0.0",
+    "tqdm>=4.66.0",
+    "tenacity>=8.2.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/Kucukogul/enerlytics.ai"
+Repository = "https://github.com/Kucukogul/enerlytics.ai"
+
+[tool.setuptools.packages.find]
+where = ["src"]
